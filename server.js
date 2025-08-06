@@ -10,8 +10,9 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'https://product-dashboard-two-eta.vercel.app',
+  origin: ['http://localhost:3000', 'https://product-dashboard-two-eta.vercel.app'],
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  credentials: true
 }));
 
 app.use(bodyParser.json());
