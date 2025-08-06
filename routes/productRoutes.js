@@ -61,15 +61,46 @@ router.get('/:id', async (req, res) => {
   }
 });
 
-// Update a product by ID
-router.put('/:id', async (req, res) => {
+// UPDATE product by ID (with optional image replacement)
+router.put('/:id', upload.array('image'), async (req, res) => {
   try {
-    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { name, description, price, category, gender, colors, sizes } = req.body;
+    const imageUrls = req.files?.map(file => file.path) || [];
+
+    const updatedData = {
+      name,
+      description,
+      price,
+      category,
+      gender,
+      colors: colors ? colors.split(',') : [],
+      sizes: sizes ? sizes.split(',') : [],
+    };
+
+    // Only replace images if new ones are uploaded
+    if (imageUrls.length > 0) {
+      updatedData.images = imageUrls;
+    }
+
+    const updatedProduct = await Product.findByIdAndUpdate(req.params.id, updatedData, { new: true });
     if (!updatedProduct) return res.status(404).json({ error: 'Product not found' });
+
     res.json(updatedProduct);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 });
+
+// DELETE product by ID
+router.delete('/:id', async (req, res) => {
+  try {
+    const deletedProduct = await Product.findOneAndDelete({ _id: req.params.id });
+    if (!deletedProduct) return res.status(404).json({ error: 'Product not found' });
+    res.json({ message: 'Product deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
 
 module.exports = router;
