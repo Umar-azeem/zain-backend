@@ -7,6 +7,9 @@ const cloudinary = require('../config/cloudinary');
 // Create product
 router.post('/', upload.array('image'), async (req, res) => {
   try {
+    console.log("Files received:", req.files);
+    console.log("Body:", req.body);
+
     const {
       name,
       description,
@@ -25,8 +28,8 @@ router.post('/', upload.array('image'), async (req, res) => {
       price,
       category,
       gender,
-      colors: colors.split(','),
-      sizes: sizes.split(','),
+      colors: colors ? colors.split(',') : [],
+      sizes: sizes ? sizes.split(',') : [],
       images: imageUrls
     });
 
@@ -37,6 +40,7 @@ router.post('/', upload.array('image'), async (req, res) => {
     res.status(500).json({ error: "Server error" });
   }
 });
+
 
 // Get all products
 router.get('/', async (req, res) => {
