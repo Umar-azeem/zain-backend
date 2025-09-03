@@ -14,4 +14,4 @@ const productSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Product", productSchema, "abd_db");
+module.exports = mongoose.model("abd_db", productSchema,);
