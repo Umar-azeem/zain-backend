@@ -7,36 +7,33 @@ const productRoutes = require("./routes/productRoutes");
 dotenv.config();
 const app = express();
 
-// ✅ CORS config
+// ✅ CORS
 app.use(
   cors({
-    origin: [
-      "http://localhost:3000",
-      "https://abd-woad.vercel.app"
-    ],
+    origin: ["http://localhost:3000", "https://abd-woad.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
-// ✅ Parse JSON
 app.use(express.json());
 
-// ✅ Routes
+// ✅ Root test route
+app.get("/", (req, res) => {
+  res.send("✅ Backend is running...");
+});
+
+// ✅ Product routes
 app.use("/api/products", productRoutes);
 
 // ✅ MongoDB connection
 if (!mongoose.connection.readyState) {
   mongoose
     .connect(process.env.MONGODB_URI)
-    .then(() => console.log("✅ MongoDB connected"))
-    .catch((err) => console.error("❌ MongoDB connection error:", err));
+    .then(() => console.log("MongoDB connected"))
+    .catch((err) => console.error("MongoDB connection error:", err));
 }
 
-// ❌ Ye line hata do jab Vercel use karo
-// app.listen(5000, () => {
-//   console.log(`Server running on port 5000`);
-// });
-
-// ✅ Vercel ke liye app ko export karo
+// ❌ Remove app.listen()
+// ✅ Export handler for Vercel
 module.exports = app;
