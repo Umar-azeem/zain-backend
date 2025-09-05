@@ -12,7 +12,7 @@ const app = express();
 // ✅ CORS config
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://zain-frontend.vercel.app/"],
+    origin: ["http://localhost:3000", "https://zain-frontend.vercel.app"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
