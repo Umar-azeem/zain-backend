@@ -5,14 +5,14 @@ const cors = require("cors");
 const productRoutes = require("./routes/productRoutes");
 
 dotenv.config();
-// const PORT = process.env.PORT || 5000;
+//  const PORT = process.env.PORT || 5000;
 
 const app = express();
 
 // ✅ CORS config
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://abd-woad.vercel.app"],
+    origin: ["http://localhost:3000", "https://zain-frontend.vercel.app/"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -25,8 +25,8 @@ app.use(express.json());
 app.use("/api/products", productRoutes);
 
 // app.listen(5000, () => {
-//   console.log(`Example app listening on port 5000`);
-// });
+//    console.log(`Example app listening on port 5000`);
+//  });
 // ✅ MongoDB connection
 if (!mongoose.connection.readyState) {
   mongoose
@@ -36,7 +36,7 @@ if (!mongoose.connection.readyState) {
 }
 
 // ✅ Vercel requires: export handler
-module.exports = app;
-// app.listen(PORT, () => {
-//   console.log(`✅ Server http://localhost:${PORT} par chal raha hai`);
-// });
+// module.exports = app;
+//  app.listen(PORT, () => {
+//    console.log(`✅ Server http://localhost:${PORT} par chal raha hai`);
+//  });
